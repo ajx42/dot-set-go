@@ -7,7 +7,22 @@ Plug 'junegunn/fzf.vim'
 Plug 'vyperlang/vim-vyper'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
+
+"COC Tab completion
+" use <tab> to trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
 
 nnoremap <leader>; :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
@@ -35,6 +50,15 @@ let g:gitgutter_sign_modified_removed = '<'
 let g:gitgutter_override_sign_column_highlight = 1
 highlight SignColumn guibg=bg
 highlight SignColumn ctermbg=bg
+
+"rust tags related, ctags doesnt work well with rust
+"run: rusty-tags vi
+"in the project directory
+autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
+autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
+
+"For C++, simply use ctags: ctags -R .
+"Note, on macos point to the ctags installed by homebrew
 
 set updatetime=250
 set expandtab

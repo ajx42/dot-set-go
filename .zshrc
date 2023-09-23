@@ -119,4 +119,5 @@ alias gll="git log --graph --oneline --all"
 alias gs="git status -uno"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
+alias ctags="`brew --prefix`/bin/ctags"
 RPROMPT=$(hostname)
