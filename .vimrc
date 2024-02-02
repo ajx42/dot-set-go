@@ -12,6 +12,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
+"COC works best with recent vim versions, but going to disable this warning for now
+let g:coc_disable_startup_warning = 1
+
 "COC Tab completion
 " use <tab> to trigger completion and navigate to the next complete item
 function! CheckBackspace() abort
