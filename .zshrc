@@ -119,5 +119,10 @@ alias gll="git log --graph --oneline --all"
 alias gs="git status -uno"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
+# at some point, i will make the following a bit more elegant
+# for cloudlab, adding some paths
+export PATH="$PATH:/users/ajain442/.local/bin/"
+export PATH=$PATH:/users/ajain442/node-v20.9.0-linux-x64/bin/
+
 alias ctags="`brew --prefix`/bin/ctags"
 RPROMPT=$(hostname)
