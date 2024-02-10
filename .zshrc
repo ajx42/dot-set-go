@@ -70,7 +70,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf-zsh-plugin zsh-autosuggestions)
+#
+# sprunge: pushes given file or string to sprunge (pastebin), helps share code easily
+# extract: swiss knife for extracting archive files without knowing caring about the format :V
+#          `extract myrandomarchive.blah.blah`
+# web-search: `google something` googles and opens browser
+# auto-suggestions: fish like suggestions :D
+plugins=(git fzf-zsh-plugin zsh-autosuggestions web-search sprunge extract cp)
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -125,4 +131,32 @@ export PATH="$PATH:/users/ajain442/.local/bin/"
 export PATH=$PATH:/users/ajain442/node-v20.9.0-linux-x64/bin/
 
 alias ctags="`brew --prefix`/bin/ctags"
-RPROMPT=$(hostname)
+
+# The following is copied from the AFMAGIC theme!
+# Draws dashed separator lines between prompts
+function afmagic_dashes {
+  # check either virtualenv or condaenv variables
+  local python_env_dir="${VIRTUAL_ENV:-$CONDA_DEFAULT_ENV}"
+  local python_env="${python_env_dir##*/}"
+
+  # if there is a python virtual environment and it is displayed in
+  # the prompt, account for it when returning the number of dashes
+  if [[ -n "$python_env" && "$PS1" = *\(${python_env}\)* ]]; then
+    echo $(( COLUMNS - ${#python_env} - 3 ))
+  else
+    echo $COLUMNS
+  fi
+}
+
+# Save PROMPT prepared by the theme
+RAW_PROMPT=$PROMPT
+
+# Following is run each time prompt is drawn.
+# Dashes above PROMPT and Time in RPROMPT
+precmd(){
+  TIME="%{$fg_bold[red]%}[$(date "+%I")%{$fg[orange]%}:$(date +%M):$(date +%S) $(date +%p)]%{$reset_color%}"
+  PROMPT="${FG[237]}\${(l.\$(afmagic_dashes)..-.)}%{$reset_color%}
+  $RAW_PROMPT"
+  RPROMPT="$(hostname) ~ $TIME"
+}
+
