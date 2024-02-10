@@ -123,6 +123,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh
 alias gll="git log --graph --oneline --all"
 alias gs="git status -uno"
+alias paste="sprunge"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # at some point, i will make the following a bit more elegant
