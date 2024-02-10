@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="af-magic"
+ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -132,11 +132,31 @@ export PATH=$PATH:/users/ajain442/node-v20.9.0-linux-x64/bin/
 
 alias ctags="`brew --prefix`/bin/ctags"
 
-RAW_RPROMPT=$RPS1
+# The following is copied from the AFMAGIC theme!
+# Draws dashed separator lines between prompts
+function afmagic_dashes {
+  # check either virtualenv or condaenv variables
+  local python_env_dir="${VIRTUAL_ENV:-$CONDA_DEFAULT_ENV}"
+  local python_env="${python_env_dir##*/}"
+
+  # if there is a python virtual environment and it is displayed in
+  # the prompt, account for it when returning the number of dashes
+  if [[ -n "$python_env" && "$PS1" = *\(${python_env}\)* ]]; then
+    echo $(( COLUMNS - ${#python_env} - 3 ))
+  else
+    echo $COLUMNS
+  fi
+}
+
+# Save PROMPT prepared by the theme
+RAW_PROMPT=$PROMPT
 
 # Following is run each time prompt is drawn.
+# Dashes above PROMPT and Time in RPROMPT
 precmd(){
   TIME="%{$fg_bold[red]%}[$(date "+%I")%{$fg[orange]%}:$(date +%M):$(date +%S) $(date +%p)]%{$reset_color%}"
-  RPROMPT="$RAW_RPROMPT ~ $TIME"
+  PROMPT="${FG[237]}\${(l.\$(afmagic_dashes)..-.)}%{$reset_color%}
+  $RAW_PROMPT"
+  RPROMPT="$(hostname) ~ $TIME"
 }
 
