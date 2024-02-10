@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf-zsh-plugin)
+plugins=(git fzf-zsh-plugin zsh-autosuggestions)
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
